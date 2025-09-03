@@ -1,299 +1,298 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pro Gaming Password - Windows 11 Simulator</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Adam Ahmed vs Adam Halawa in Drums</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { 
-      width: 100%; height: 100%; font-family: 'Segoe UI', sans-serif;
-      background: radial-gradient(circle, rgba(29, 29, 29, 0.85) 40%, rgba(0, 0, 0, 1) 100%);
-      color: white;
+    :root{
+      --bg1:#0f1226;
+      --bg2:#1a1e3a;
+      --accent1:#8a5cff;
+      --accent2:#00e0ff;
+      --accent3:#ff4d8d;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; scroll-behavior: smooth; }
+    body {
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      color: #fff;
+      font-family: "Montserrat", sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Background stars */
+    .stars {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: transparent;
       overflow: hidden;
+      z-index: -2;
     }
-    
-    /* Glowing Neon Effect */
-    .glowing-text {
-      text-shadow: 0 0 10px rgba(0, 255, 255, 0.7), 0 0 20px rgba(0, 255, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.7);
-    }
-
-    /* Background Particles */
-    .particle {
+    .stars span {
       position: absolute;
+      display: block;
+      width: 2px;
+      height: 2px;
+      background: white;
+      opacity: 0.8;
       border-radius: 50%;
-      opacity: 0.7;
-      animation: move 3s infinite ease-in-out;
+      animation: twinkle 2s infinite ease-in-out alternate;
+    }
+    @keyframes twinkle {
+      from { opacity: 0.2; }
+      to   { opacity: 1; }
     }
 
-    @keyframes move {
-      0% { transform: translate(0, 0); }
-      50% { transform: translate(150px, -150px); }
-      100% { transform: translate(0, 0); }
-    }
-
-    /* Login Screen */
-    #loginScreen {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      position: relative;
-    }
-
-    #loginBox {
-      background: rgba(0, 0, 0, 0.8);
-      padding: 40px;
-      border-radius: 15px;
-      text-align: center;
-      width: 300px;
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
-      z-index: 100;
-    }
-
-    h2 {
-      font-size: 24px;
-      margin-bottom: 20px;
-      color: #00FFFF;
-      text-transform: uppercase;
-      font-weight: bold;
-      letter-spacing: 1.5px;
-    }
-
-    input[type="password"] {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 20px;
-      border: none;
-      border-radius: 10px;
-      background: rgba(0, 255, 255, 0.1);
-      color: white;
-      font-size: 18px;
-      text-align: center;
-      letter-spacing: 2px;
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
-    }
-
-    input[type="password"]:focus {
-      outline: none;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 1);
-    }
-
-    button {
-      padding: 12px 25px;
-      background: rgba(0, 255, 255, 0.6);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 18px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      transition: all 0.3s ease;
-    }
-
-    button:hover {
-      background: rgba(0, 255, 255, 1);
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.9);
-    }
-
-    #errorMessage {
-      color: #FF4747;
-      display: none;
-      font-size: 14px;
-      margin-top: 10px;
-    }
-
-    /* Desktop */
-    .desktop {
-      display: none;
-      width: 100%;
-      height: 100%;
-      position: relative;
-      background: url('https://raw.githubusercontent.com/blueedgetechno/windows11/main/img/wallpaper.jpg') no-repeat center center/cover;
-    }
-
-    .taskbar {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 48px;
-      background: rgba(40, 40, 40, 0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(10px);
-    }
-
-    .taskbar-icons {
-      display: flex;
-      gap: 20px;
-    }
-
-    .taskbar-icons img {
-      height: 24px;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .taskbar-icons img:hover {
-      transform: scale(1.1);
-    }
-
-    .clock {
-      position: absolute;
-      right: 16px;
-      color: white;
-      font-size: 14px;
-      bottom: 14px;
-    }
-
-    /* News Page */
-    .news-page {
-      position: absolute;
-      top: 100px;
+    /* Glowing rotating squares */
+    .squares {
+      position: fixed;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.7);
-      width: 80%;
-      height: 70%;
-      padding: 20px;
-      border-radius: 15px;
-      color: white;
-      overflow-y: auto;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .squares div {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border: 3px solid rgba(255,255,255,0.15);
+      transform: rotate(45deg);
+      animation: floatSquare 20s linear infinite;
+    }
+    .squares div:nth-child(1) {
+      top: -50px; left: -50px;
+      animation-duration: 25s;
+    }
+    .squares div:nth-child(2) {
+      top: 200px; right: -80px;
+      animation-duration: 35s;
+    }
+    .squares div:nth-child(3) {
+      bottom: -100px; left: 40%;
+      animation-duration: 30s;
+    }
+    @keyframes floatSquare {
+      from { transform: rotate(0deg) translateY(0); }
+      to   { transform: rotate(360deg) translateY(-50px); }
     }
 
-    .news-header {
-      font-size: 24px;
-      margin-bottom: 15px;
-      color: #00FFFF;
+    .wrapper {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      position: relative;
+      padding: 3.5rem 2.25rem;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.07);
       text-align: center;
+      max-width: 900px;
+      width: min(92vw, 900px);
+      margin: 3rem auto;
     }
 
-    .news-article {
-      background: rgba(0, 0, 0, 0.5);
-      margin: 10px 0;
-      padding: 10px;
+    h1 {
+      margin: 0 0 .6rem 0;
+      font-family: "Playfair Display", serif;
+      font-weight: 900;
+      font-size: clamp(2.2rem, 6vw, 5rem);
+      line-height: 1.05;
+    }
+
+    .name {
+      display: block;
+      background: linear-gradient(270deg, var(--accent1), var(--accent2), var(--accent3), var(--accent1));
+      background-size: 600% 600%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin: 0.5rem 0;
+      animation: shine 6s linear infinite;
+    }
+    @keyframes shine {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .vs {
+      display: block;
+      font-weight: 700;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: #e8ecff;
+      margin: 0.8rem 0;
+    }
+
+    p.tagline {
+      margin: 1.6rem 0 0;
+    }
+
+    .btn {
+      margin-top: 1rem;
+      padding: 0.9rem 1.8rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+    }
+
+    .more-info {
+      padding: 3rem 2rem;
+      max-width: 800px;
+      margin: 0 auto 4rem;
+      text-align: center;
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+    }
+
+    .like-btn, .dislike-btn, .reset-btn {
+      margin: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      border: none;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+      cursor: pointer;
     }
 
-    .news-article h3 {
-      font-size: 18px;
-      color: #00FFFF;
+    .like-btn {
+      background: linear-gradient(90deg, var(--accent2), var(--accent3));
     }
 
-    .news-article p {
-      color: #ddd;
+    .dislike-btn {
+      background: linear-gradient(90deg, #ff0000, #aa0000);
     }
 
-    .news-article a {
-      color: #00FFFF;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .news-article a:hover {
-      text-decoration: underline;
+    .reset-btn {
+      background: linear-gradient(90deg, #555, #222);
     }
   </style>
 </head>
 <body>
-  <!-- Particles -->
-  <div class="particle" style="top: 10%; left: 20%; width: 20px; height: 20px; animation-delay: 0s;"></div>
-  <div class="particle" style="top: 30%; left: 70%; width: 15px; height: 15px; animation-delay: 2s;"></div>
-  <div class="particle" style="top: 50%; left: 50%; width: 25px; height: 25px; animation-delay: 4s;"></div>
-  <div class="particle" style="top: 80%; left: 30%; width: 18px; height: 18px; animation-delay: 6s;"></div>
-  <div class="particle" style="top: 60%; left: 10%; width: 20px; height: 20px; animation-delay: 8s;"></div>
+  <!-- Background Effects -->
+  <div class="stars"></div>
+  <div class="squares">
+    <div></div><div></div><div></div>
+  </div>
 
-  <!-- Login Screen -->
-  <div id="loginScreen">
-    <div id="loginBox">
-      <h2 class="glowing-text">Welcome to Fake Windows 11</h2>
-      <input type="password" id="passwordInput" placeholder="Enter password" />
-      <button onclick="checkPassword()">Login</button>
-      <p id="errorMessage">Incorrect password, try again.</p>
+  <div class="wrapper">
+    <div class="card">
+      <h1>
+        <span class="name">Adam Ahmed</span>
+        <span class="vs">VS</span>
+        <span class="name">Adam Halawa</span>
+        <div class="vs">in Drums 🥁</div>
+      </h1>
+      <p class="tagline">A showdown in spectacular, shimmering style ✨</p>
+      <a href="#more-info"><button class="btn">More Info</button></a>
     </div>
   </div>
 
-  <!-- Desktop (Hidden Initially) -->
-  <div class="desktop" id="desktop">
-    <div class="taskbar">
-      <div class="taskbar-icons">
-        <img src="https://img.icons8.com/color/48/windows-11.png" id="startBtn" alt="Start" />
-        <img src="https://img.icons8.com/fluency/48/microsoft-edge.png" alt="Edge" />
-        <img src="https://img.icons8.com/fluency/48/microsoft-store.png" alt="Store" />
-        <img src="https://img.icons8.com/fluency/48/news.png" alt="News" onclick="openNewsPage()" />
-      </div>
-      <div class="clock" id="clock"></div>
-    </div>
-  </div>
+  <div id="more-info" class="more-info">
+    <h2>More Information</h2>
+    <p>
+      Adam Ahmed and Adam Halawa are seeing who is better in drums.  
+      Put a like on <strong>Adam Ahmed</strong> if you prefer him,  
+      but put a like on <strong>Adam Halawa</strong> if you prefer him.  
+      You can also dislike if you don’t prefer them.
+    </p>
 
-  <!-- News Page (Hidden Initially) -->
-  <div class="news-page" id="newsPage" style="display: none;">
-    <div class="news-header">Latest News</div>
-    <div id="newsContent"></div>
+    <div>
+      <button class="like-btn" onclick="like('ahmed')">👍 Adam Ahmed (<span id="ahmedLikes">0</span>)</button>
+      <button class="dislike-btn" onclick="dislike('ahmed')">👎 (<span id="ahmedDislikes">0</span>)</button>
+    </div>
+
+    <div>
+      <button class="like-btn" onclick="like('halawa')">👍 Adam Halawa (<span id="halawaLikes">0</span>)</button>
+      <button class="dislike-btn" onclick="dislike('halawa')">👎 (<span id="halawaDislikes">0</span>)</button>
+    </div>
+
+    <div>
+      <button class="reset-btn" onclick="resetVotes()">🔄 Reset</button>
+    </div>
   </div>
 
   <script>
-    // Password Logic
-    function checkPassword() {
-      const password = document.getElementById("passwordInput").value;
-      const correctPassword = "1234";
-      const loginScreen = document.getElementById("loginScreen");
-      const desktop = document.getElementById("desktop");
-      const errorMessage = document.getElementById("errorMessage");
+    // Generate stars dynamically
+    const stars = document.querySelector('.stars');
+    for(let i=0; i<80; i++){
+      const star = document.createElement('span');
+      star.style.top = Math.random() * 100 + "%";
+      star.style.left = Math.random() * 100 + "%";
+      star.style.animationDuration = (Math.random() * 2 + 1) + "s";
+      stars.appendChild(star);
+    }
 
-      if (password === correctPassword) {
-        // Play success sound
-        const successSound = new Audio('https://www.soundjay.com/button/beep-07.wav');
-        successSound.play();
+    // Default votes
+    let defaultVotes = {
+      ahmedLikes: 1,
+      ahmedDislikes: 0,
+      halawaLikes: 1,
+      halawaDislikes: 0
+    };
 
-        loginScreen.style.display = "none";
-        desktop.style.display = "block";
-      } else {
-        // Play failure sound
-        const failureSound = new Audio('https://www.soundjay.com/button/beep-08b.wav');
-        failureSound.play();
+    function loadVotes() {
+      let votes = JSON.parse(localStorage.getItem('votes')) || defaultVotes;
+      document.getElementById('ahmedLikes').innerText = votes.ahmedLikes;
+      document.getElementById('ahmedDislikes').innerText = votes.ahmedDislikes;
+      document.getElementById('halawaLikes').innerText = votes.halawaLikes;
+      document.getElementById('halawaDislikes').innerText = votes.halawaDislikes;
+      return votes;
+    }
 
-        errorMessage.style.display = "block";
+    let votes = loadVotes();
+
+    function saveVotes() {
+      localStorage.setItem('votes', JSON.stringify(votes));
+    }
+
+    function like(person) {
+      if (person === 'ahmed') {
+        votes.ahmedLikes++;
+      } else if (person === 'halawa') {
+        votes.halawaLikes++;
       }
+      saveVotes();
+      loadVotes();
     }
 
-    // Clock Update
-    function updateClock() {
-      const now = new Date();
-      const hours = now.getHours().toString().padStart(2, '0');
-      const minutes = now.getMinutes().toString().padStart(2, '0');
-      document.getElementById("clock").textContent = `${hours}:${minutes}`;
+    function dislike(person) {
+      if (person === 'ahmed') {
+        votes.ahmedDislikes++;
+      } else if (person === 'halawa') {
+        votes.halawaDislikes++;
+      }
+      saveVotes();
+      loadVotes();
     }
-    updateClock();
-    setInterval(updateClock, 60000);
 
-    // News Page Logic
-    function openNewsPage() {
-      const newsPage = document.getElementById("newsPage");
-      const desktop = document.getElementById("desktop");
-      desktop.style.display = "none";
-      newsPage.style.display = "block";
-      
-      // Fetch news from NewsAPI
-      fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=YOUR_API_KEY')
-        .then(response => response.json())
-        .then(data => {
-          const newsContent = document.getElementById('newsContent');
-          data.articles.forEach(article => {
-            const newsArticle = document.createElement('div');
-            newsArticle.classList.add('news-article');
-            newsArticle.innerHTML = `
-              <h3>${article.title}</h3>
-              <p>${article.description}</p>
-              <a href="${article.url}" target="_blank">Read more</a>
-            `;
-            newsContent.appendChild(newsArticle);
-          });
-        })
-        .catch(error => console.error('Error fetching news:', error));
+    function resetVotes() {
+      if (confirm("Are you sure you want to reset all votes?")) {
+        votes = { ...defaultVotes };
+        saveVotes();
+        loadVotes();
+      }
     }
   </script>
 </body>
